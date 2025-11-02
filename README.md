@@ -1,4 +1,4 @@
-# ProyectoPersonal app
+# Memoriza y Aprende
 
 ## Run the app
 
