@@ -10,7 +10,7 @@ def main(page: ft.Page):
         "Memoriza Y Aprende",
         size=40,
         weight=ft.FontWeight.BOLD,
-        color="#333333",
+        color="#df6b16",
         text_align=ft.TextAlign.CENTER,
     )
 
@@ -19,7 +19,7 @@ def main(page: ft.Page):
         "y rápida el significado y traducción español - inglés de algunas palabras.",
         size=18,
         text_align=ft.TextAlign.CENTER,
-        color="#555555",
+        color="#232376",
     )
 
     btn_empezar = ft.ElevatedButton(
