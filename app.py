@@ -10,7 +10,7 @@ def main(page: ft.Page):
 
 #Aqui estamos creando unavariable tipo texto por eso el ft Text
     titulo = ft.Text(
-        "Memoriza Y Aprende",
+        "¡Memoriza Y Aprende!",
         size=40,
         weight=ft.FontWeight.BOLD,
         color="#df6b16",
