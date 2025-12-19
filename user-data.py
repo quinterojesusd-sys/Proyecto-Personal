@@ -14,7 +14,4 @@ def guardar_usuario(nombre, puntaje):
     with open("usuarios.json", "w", encoding="utf-8") as archivo:
         json.dump(usuarios, archivo, indent=4, ensure_ascii=False)
 
-# Ejemplo de uso
-usuario = input("Ingresa tu nombre: ")
-puntaje = 15
-guardar_usuario(usuario, puntaje)
+
