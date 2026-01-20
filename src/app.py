@@ -3,9 +3,9 @@ import json
 import random
 import os
 
-# --- 1. SISTEMA DE GUARDADO (USUARIOS) ---
 def guardar_puntaje(nombre, puntos):
-    nuevo_registro = {"nombre": nombre, "puntos": puntos}
+    nombre_estandar = nombre.lower()
+    nuevo_registro = {"nombre": nombre_estandar, "puntos": puntos}
     lista_usuarios = []
 
     if os.path.exists("usuarios.json"):
@@ -24,6 +24,7 @@ def guardar_puntaje(nombre, puntos):
         print(f"Error guardando: {e}")
 
 def obtener_datos_usuario(nombre):
+    nombre_estandar = nombre.lower()
     total_puntos = 0
     partidas = 0
     if os.path.exists("usuarios.json"):
@@ -31,16 +32,14 @@ def obtener_datos_usuario(nombre):
             with open("usuarios.json", "r", encoding="utf-8") as f:
                 datos = json.load(f)
                 for registro in datos:
-                    if registro.get("nombre") == nombre:
+                    if registro.get("nombre", "").lower() == nombre_estandar:
                         total_puntos += registro.get("puntos", 0)
                         partidas += 1
         except:
             pass
     return total_puntos, partidas
 
-# --- 2. APLICACIÓN PRINCIPAL ---
 def main(page: ft.Page):
-    # Configuración de ventana
     page.title = "Aprende Inglés"
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.scroll = ft.ScrollMode.AUTO
@@ -48,16 +47,13 @@ def main(page: ft.Page):
     page.window_width = 400
     page.window_height = 700
 
-    # Variables globales
     usuario_actual = ""
     score = 0
     round_index = 0
     quiz_words = []
     
-    # Lista maestra donde cargaremos el JSON
     lista_palabras_cargadas = []
 
-    # Contenedor principal
     titulo = ft.Text("Aprende Inglés", size=30, weight=ft.FontWeight.BOLD)
     area_contenido = ft.Column(
         alignment=ft.MainAxisAlignment.CENTER,
@@ -67,14 +63,12 @@ def main(page: ft.Page):
 
     page.add(titulo, area_contenido)
 
-    # --- FUNCIÓN DE CARGA DE JSON ---
     def cargar_palabras_json():
         nonlocal lista_palabras_cargadas
         try:
             with open("words.json", "r", encoding="utf-8") as f:
                 data = json.load(f)
             
-            # Unimos todas las categorías en una sola lista para el juego
             facil = data.get("easy", [])
             medio = data.get("medium", [])
             dificil = data.get("hard", [])
@@ -84,11 +78,9 @@ def main(page: ft.Page):
         except Exception as e:
             return False
 
-    # --- PANTALLA 1: LOGIN ---
     def mostrar_login():
         area_contenido.controls.clear()
         
-        # Intentar cargar palabras al inicio
         exito = cargar_palabras_json()
         if not exito:
             area_contenido.controls.append(ft.Text("❌ Error: No se encontró words.json", color="red", size=20))
@@ -123,13 +115,11 @@ def main(page: ft.Page):
         area_contenido.controls.append(btn_entrar)
         page.update()
 
-    # --- PANTALLA 2: MENÚ PRINCIPAL ---
     def mostrar_menu():
         area_contenido.controls.clear()
         
         total, jugadas = obtener_datos_usuario(usuario_actual)
 
-        # Tarjeta de información
         info_usuario = ft.Container(
             content=ft.Column([
                 ft.Text(f"👤 Jugador: {usuario_actual}", size=18, weight=ft.FontWeight.BOLD),
@@ -166,13 +156,11 @@ def main(page: ft.Page):
         area_contenido.controls.append(btn_salir)
         page.update()
 
-    # --- PANTALLA 3: QUIZ ---
     def iniciar_quiz():
         nonlocal score, round_index, quiz_words
         score = 0
         round_index = 0
         
-        # Usamos la lista cargada del JSON
         if not lista_palabras_cargadas:
              area_contenido.controls.append(ft.Text("Error: Lista de palabras vacía"))
              page.update()
@@ -180,7 +168,7 @@ def main(page: ft.Page):
 
         quiz_words = lista_palabras_cargadas.copy()
         random.shuffle(quiz_words)
-        quiz_words = quiz_words[:10] # Máximo 10 preguntas por ronda
+        quiz_words = quiz_words[:10]
         
         ronda_quiz()
 
@@ -188,7 +176,6 @@ def main(page: ft.Page):
         nonlocal round_index, score
         area_contenido.controls.clear()
 
-        # FIN DEL JUEGO
         if round_index >= len(quiz_words):
             guardar_puntaje(usuario_actual, score)
             
@@ -205,21 +192,17 @@ def main(page: ft.Page):
             page.update()
             return
 
-        # Lógica de la pregunta
         palabra_actual = quiz_words[round_index]
         correcta = palabra_actual["spanish"]
 
-        # Generar opciones incorrectas desde la lista completa
         otras = [w["spanish"] for w in lista_palabras_cargadas if w["spanish"] != correcta]
         
-        # Evitar error si hay pocas palabras
         cantidad_opciones = min(3, len(otras))
         malas = random.sample(otras, cantidad_opciones)
         
         opciones = malas + [correcta]
         random.shuffle(opciones)
 
-        # UI
         txt_pregunta = ft.Text(f"¿Cómo se dice '{palabra_actual['english']}'?", size=22)
         txt_resultado = ft.Text("", size=18, weight=ft.FontWeight.BOLD)
         columna_botones = ft.Column(spacing=10)
@@ -236,7 +219,6 @@ def main(page: ft.Page):
                 txt_resultado.value = f"❌ Mal. Era: {correcta}"
                 txt_resultado.color = ft.Colors.RED
             
-            # Bloquear botones
             for btn in columna_botones.controls:
                 btn.disabled = True
             
@@ -252,7 +234,6 @@ def main(page: ft.Page):
             round_index += 1
             ronda_quiz()
 
-        # Crear botones
         for opcion in opciones:
             btn = ft.ElevatedButton(
                 content=ft.Text(opcion),
@@ -270,7 +251,6 @@ def main(page: ft.Page):
         area_contenido.controls.append(txt_resultado)
         page.update()
 
-    # --- PANTALLA 4: PRÁCTICA ---
     def iniciar_practica():
         area_contenido.controls.clear()
         
@@ -313,7 +293,6 @@ def main(page: ft.Page):
         area_contenido.controls.append(btn_volver)
         page.update()
 
-    # Arrancar con el Login
     mostrar_login()
 
 ft.app(target=main)
