@@ -40,7 +40,7 @@ def obtener_datos_usuario(nombre):
     return total_puntos, partidas
 
 def main(page: ft.Page):
-    page.title = "Aprende Inglés"
+    page.title = "¡Memoriza y Aprende!"
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.scroll = ft.ScrollMode.AUTO
     page.theme_mode = ft.ThemeMode.LIGHT
@@ -54,7 +54,7 @@ def main(page: ft.Page):
     
     lista_palabras_cargadas = []
 
-    titulo = ft.Text("Aprende Inglés", size=30, weight=ft.FontWeight.BOLD)
+    titulo = ft.Text("¡Memoriza y Aprende!", size=30, weight=ft.FontWeight.BOLD)
     area_contenido = ft.Column(
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
