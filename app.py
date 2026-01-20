@@ -55,7 +55,14 @@ def main(page: ft.Page):
     
     lista_palabras_cargadas = []
 
-    titulo = ft.Text("¡Memoriza Y Aprende!",  color="#f88633", size=30, weight=ft.FontWeight.BOLD)
+#TITULO
+    titulo = ft.Text("¡Memoriza Y Aprende!",  
+    color="#f88633", 
+    size=30, 
+    weight=ft.FontWeight.BOLD,
+    text_align=ft.TextAlign.CENTER
+    
+    )
     area_contenido = ft.Column(
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -104,6 +111,7 @@ def main(page: ft.Page):
             usuario_actual = campo_nombre.value
             mostrar_menu()
 
+#BOTONES
         btn_entrar = ft.ElevatedButton(
             content=ft.Text("COMENZAR"),
             width=200,
@@ -112,6 +120,9 @@ def main(page: ft.Page):
 
         area_contenido.controls.append(ft.Text("En este juego aprenderas a tu ritmo palabras en ingles de manera divertida y rapida, al igual que su traducción español-ingles", 
         size=24,
+        weight=ft.FontWeight.BOLD,
+        color="#232376",
+        text_align=ft.TextAlign.CENTER #centrando el texto
         
         ))
         area_contenido.controls.append(campo_nombre)
