@@ -46,6 +46,7 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
     page.window_width = 400
     page.window_height = 700
+   
 
     usuario_actual = ""
     score = 0
@@ -54,7 +55,7 @@ def main(page: ft.Page):
     
     lista_palabras_cargadas = []
 
-    titulo = ft.Text("¡Memoriza Y Aprende!", size=30, weight=ft.FontWeight.BOLD)
+    titulo = ft.Text("¡Memoriza Y Aprende!",  color="#f88633", size=30, weight=ft.FontWeight.BOLD)
     area_contenido = ft.Column(
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -109,7 +110,10 @@ def main(page: ft.Page):
             on_click=intentar_entrar
         )
 
-        area_contenido.controls.append(ft.Text("¡Bienvenido!", size=24))
+        area_contenido.controls.append(ft.Text("En este juego aprenderas a tu ritmo palabras en ingles de manera divertida y rapida, al igual que su traducción español-ingles", 
+        size=24,
+        
+        ))
         area_contenido.controls.append(campo_nombre)
         area_contenido.controls.append(ft.Container(height=10))
         area_contenido.controls.append(btn_entrar)
@@ -133,13 +137,13 @@ def main(page: ft.Page):
         )
 
         btn_quiz = ft.ElevatedButton(
-            content=ft.Text("🧠 Jugar Quiz"),
+            content=ft.Text("EMPEZAR"),
             width=250,
             on_click=lambda e: iniciar_quiz()
         )
 
         btn_practica = ft.ElevatedButton(
-            content=ft.Text("📖 Modo Práctica"),
+            content=ft.Text("MODO PRACTICA"),
             width=250,
             on_click=lambda e: iniciar_practica()
         )
