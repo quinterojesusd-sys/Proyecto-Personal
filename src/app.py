@@ -1,7 +1,7 @@
 import flet as ft
 import json
-import random
-import os
+import random #30
+import os #185
 
 def guardar_puntaje(nombre, puntos):
     nombre_estandar = nombre.lower()
@@ -27,7 +27,7 @@ def obtener_datos_usuario(nombre):
     nombre_estandar = nombre.lower()
     total_puntos = 0
     partidas = 0
-    if os.path.exists("usuarios.json"):
+    if os.path.exists("usuarios.json"):  #Libreria Os
         try:
             with open("usuarios.json", "r", encoding="utf-8") as f:
                 datos = json.load(f)
@@ -40,12 +40,13 @@ def obtener_datos_usuario(nombre):
     return total_puntos, partidas
 
 def main(page: ft.Page):
-    page.title = "¡Memoriza y Aprende!"
+    page.title = "¡Memoriza Y Aprende!"
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.scroll = ft.ScrollMode.AUTO
     page.theme_mode = ft.ThemeMode.LIGHT
     page.window_width = 400
     page.window_height = 700
+   
 
     usuario_actual = ""
     score = 0
@@ -54,7 +55,14 @@ def main(page: ft.Page):
     
     lista_palabras_cargadas = []
 
-    titulo = ft.Text("¡Memoriza y Aprende!", size=30, weight=ft.FontWeight.BOLD)
+#TITULO
+    titulo = ft.Text("¡Memoriza Y Aprende!",  
+    color="#f88633", 
+    size=30, 
+    weight=ft.FontWeight.BOLD,
+    text_align=ft.TextAlign.CENTER
+    
+    )
     area_contenido = ft.Column(
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -103,13 +111,20 @@ def main(page: ft.Page):
             usuario_actual = campo_nombre.value
             mostrar_menu()
 
+#BOTONES
         btn_entrar = ft.ElevatedButton(
             content=ft.Text("COMENZAR"),
             width=200,
             on_click=intentar_entrar
         )
 
-        area_contenido.controls.append(ft.Text("¡Bienvenido!", size=24))
+        area_contenido.controls.append(ft.Text("En este juego aprenderas a tu ritmo palabras en ingles de manera divertida y rapida, al igual que su traducción español-ingles", 
+        size=24,
+        weight=ft.FontWeight.BOLD,
+        color="#232376",
+        text_align=ft.TextAlign.CENTER #centrando el texto
+        
+        ))
         area_contenido.controls.append(campo_nombre)
         area_contenido.controls.append(ft.Container(height=10))
         area_contenido.controls.append(btn_entrar)
@@ -133,13 +148,13 @@ def main(page: ft.Page):
         )
 
         btn_quiz = ft.ElevatedButton(
-            content=ft.Text("🧠 Jugar Quiz"),
+            content=ft.Text("EMPEZAR"),
             width=250,
             on_click=lambda e: iniciar_quiz()
         )
 
         btn_practica = ft.ElevatedButton(
-            content=ft.Text("📖 Modo Práctica"),
+            content=ft.Text("MODO PRACTICA"),
             width=250,
             on_click=lambda e: iniciar_practica()
         )
@@ -167,7 +182,7 @@ def main(page: ft.Page):
              return
 
         quiz_words = lista_palabras_cargadas.copy()
-        random.shuffle(quiz_words)
+        random.shuffle(quiz_words) #Libreria Random
         quiz_words = quiz_words[:10]
         
         ronda_quiz()
