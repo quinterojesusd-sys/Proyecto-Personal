@@ -1,7 +1,7 @@
 import flet as ft
 import json
-import random
-import os
+import random #30
+import os #185
 
 def guardar_puntaje(nombre, puntos):
     nombre_estandar = nombre.lower()
@@ -27,7 +27,7 @@ def obtener_datos_usuario(nombre):
     nombre_estandar = nombre.lower()
     total_puntos = 0
     partidas = 0
-    if os.path.exists("usuarios.json"):
+    if os.path.exists("usuarios.json"):  #Libreria Os
         try:
             with open("usuarios.json", "r", encoding="utf-8") as f:
                 datos = json.load(f)
@@ -182,7 +182,7 @@ def main(page: ft.Page):
              return
 
         quiz_words = lista_palabras_cargadas.copy()
-        random.shuffle(quiz_words)
+        random.shuffle(quiz_words) #Libreria Random
         quiz_words = quiz_words[:10]
         
         ronda_quiz()

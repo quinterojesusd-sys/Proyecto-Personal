@@ -38,5 +38,21 @@
     {
         "nombre": "jesus",
         "puntos": 3
+    },
+    {
+        "nombre": "viki",
+        "puntos": 9
+    },
+    {
+        "nombre": "will",
+        "puntos": 9
+    },
+    {
+        "nombre": "vivi",
+        "puntos": 4
+    },
+    {
+        "nombre": "jesus",
+        "puntos": 2
     }
 ]
